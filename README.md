@@ -9,23 +9,26 @@ Provides the ablity to run functions before and after a print request.
 **Initiate OnPrint**
 
 ```
-require('on-print') // This only needs to be done once in your project
+var OnPrint = require('on-print')
+  , printListener = new OnPrint()
 ```
 
 **Add a function to run before print**
 
 ```
-window.onPrint.addBefore(function() {
-  // Function code
-})
+printListener.on('before', fn)
 ```
 
 **Add a function to run after print**
 
 ```
-window.onPrint.addAfter(function() {
-  // Function code
-})
+printListener.on('after', fn)
+```
+
+**Start watching for print events**
+
+```
+printListener.start()
 ```
 
 ## Browser Support

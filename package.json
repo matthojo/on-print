@@ -1,0 +1,27 @@
+{
+  "name": "on-print",
+  "version": "1.0.0",
+  "description": "Provides the ability to run functions before and after a print request.",
+  "main": "on-print.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/mocha -R spec ./test/simulate-browser-env",
+    "browser-test": "zuul -- test/view.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/matthojo/on-print.git"
+  },
+  "author": "Matthew Harrison-Jones",
+  "license": "BSD",
+  "dependencies": {
+    "inherits": "~2.0.0"
+  },
+  "devDependencies": {
+    "jsdom": "^1.0.1",
+    "mocha": "^1.21.5",
+    "zuul": "^1.11.2"
+  }
+}

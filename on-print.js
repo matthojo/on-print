@@ -1,87 +1,57 @@
 module.exports = OnPrint
 
-  //
-  // OnPrint
-  // Provides the ability to run functions before and after a print request.
-  // Adapted from: http://tjvantoll.com/2012/06/15/detecting-print-requests-with-javascript/
-  //
-  // IE 5+, Firefox 6+, Chrome 9+, and Safari 5.1+ (not Opera)
-  //
+var EventEmitter = require('events').EventEmitter
+  , inherits = require('inherits')
 
-  // Cache window object
-  var w = window
+//
+// OnPrint
+// Provides the ability to run functions before and after a print request.
+// Adapted from: http://tjvantoll.com/2012/06/15/detecting-print-requests-with-javascript/
+//
+// IE 5+, Firefox 6+, Chrome 9+, and Safari 5.1+ (not Opera)
+//
 
-  /*
-   * Construct a Print functions
-   */
-  function OnPrint() {
-    this.before = []
-    this.after = []
+/*
+ * Construct a Print functions
+ */
+function OnPrint() {
+  EventEmitter.call(this)
+}
+
+inherits(OnPrint, EventEmitter)
+
+/*
+* Listen for 'before' and 'after' events
+*/
+OnPrint.prototype.on = function (event, fn) {
+  switch (event) {
+    case 'before':
+    case 'after':
+      EventEmitter.prototype.on.apply(this, arguments)
+      break
+    default:
+       throw new Error('Incorrect event type. It must be "before" or "after"')
   }
+  return this
+}
 
-  /*
-  * Add a function to run before print.
-  */
-  OnPrint.prototype.addBefore = function (func) {
-    if(func instanceof Array) {
-      this.before = this.before.concat(func)
-    } else {
-      this.before.push(func)
-    }
-
-    return this
-  }
-
-  /*
-  * Add a function to run after print.
-  */
-  OnPrint.prototype.addAfter = function (func) {
-
-    if(func instanceof Array) {
-      this.after = this.after.concat(func)
-    } else {
-      this.after.push(func)
-    }
-
-    return this
-  }
-
-  /*
-  * Initialise before functions.
-  */
-  OnPrint.prototype.initBeforeFunctions = function () {
-    for (var i = 0; i < this.before.length; i++) {
-      this.before[i]()
-    }
-
-    return this
-  }
-
-  /*
-  * Initialise after functions.
-  */
-  OnPrint.prototype.initAfterFunctions = function () {
-    for (var i = 0; i < this.after.length; i++) {
-      this.after[i]()
-    }
-
-    return this
-  }
-
-  // Make `onPrint` public
-  w.onPrint = new OnPrint()
-
+/*
+* Start watching for print events
+*/
+OnPrint.prototype.start = function() {
   // Initiate listeners
-  if (w.matchMedia) {
-    var mediaQueryList = w.matchMedia('print')
+  if (window.matchMedia) {
+    var mediaQueryList = window.matchMedia('print')
     mediaQueryList.addListener(function(mql) {
       if (mql.matches) {
-        w.onPrint.initBeforeFunctions()
+        this.emit('before')
       } else {
-        w.onPrint.initAfterFunctions()
+        this.emit('after')
       }
     })
   }
 
-  w.onbeforeprint = w.onPrint.initBeforeFunctions
-  w.onafterprint = w.onPrint.initAfterFunctions
+  var emitter = this
+  window.onbeforeprint = function () { emitter.emit('before') }
+  window.onafterprint = function () { emitter.emit('after') }
+}
