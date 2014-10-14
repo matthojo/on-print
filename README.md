@@ -40,6 +40,6 @@ BSD
 
 ### Authors / Contributors
 
-Matthew Harrison-Jones
+Matthew Harrison-Jones, Ben Gourley
 
 Adapted from: <http://tjvantoll.com/2012/06/15/detecting-print-requests-with-javascript/>
