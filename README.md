@@ -5,6 +5,13 @@ Provides the ablity to run functions before and after a print request.
 
 ## Usage
 
+
+**Initiate OnPrint**
+
+```
+require('on-print')
+```
+
 **Add a function to run before print**
 
 ```
