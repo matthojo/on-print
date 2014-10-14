@@ -9,7 +9,7 @@ Provides the ablity to run functions before and after a print request.
 **Initiate OnPrint**
 
 ```
-require('on-print')
+require('on-print') // This only needs to be done once in your project
 ```
 
 **Add a function to run before print**
