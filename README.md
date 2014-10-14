@@ -21,8 +21,15 @@ window.onPrint.addAfter(function() {
 })
 ```
 
-### Browser Support
+## Browser Support
 IE 5+, Firefox 6+, Chrome 9+, and Safari 5.1+ (not Opera)
 
-### Credits
-It was originally adapted from: http://tjvantoll.com/2012/06/15/detecting-print-requests-with-javascript/
+### License
+
+BSD
+
+### Authors / Contributors
+
+Matthew Harrison-Jones
+
+Adapted from: <http://tjvantoll.com/2012/06/15/detecting-print-requests-with-javascript/>
