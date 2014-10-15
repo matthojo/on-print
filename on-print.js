@@ -39,21 +39,22 @@ OnPrint.prototype.on = function (event, fn) {
 * Start watching for print events
 */
 OnPrint.prototype.start = function(cb) {
+  var emitter = this
+
   // Initiate listeners
   if (window.matchMedia) {
     var mediaQueryList = window.matchMedia('print')
     mediaQueryList.addListener(function(mql) {
       if (mql.matches) {
-        this.emit('before')
+        emitter.emit('before')
       } else {
-        this.emit('after')
+        emitter.emit('after')
       }
     })
   }
 
-  var emitter = this
   window.onbeforeprint = function () { emitter.emit('before') }
   window.onafterprint = function () { emitter.emit('after') }
 
-  cb()
+  if(cb) cb()
 }
