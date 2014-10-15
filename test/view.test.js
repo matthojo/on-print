@@ -37,4 +37,13 @@ describe('view', function () {
     })
 
   })
+
+  describe('.start()', function () {
+
+    it('should run callback function on .start()', function (done) {
+      var printListener = new OnPrint()
+      printListener.start(function () { done() })
+    })
+
+  })
 })

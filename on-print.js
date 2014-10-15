@@ -38,7 +38,7 @@ OnPrint.prototype.on = function (event, fn) {
 /*
 * Start watching for print events
 */
-OnPrint.prototype.start = function() {
+OnPrint.prototype.start = function(cb) {
   // Initiate listeners
   if (window.matchMedia) {
     var mediaQueryList = window.matchMedia('print')
@@ -54,4 +54,6 @@ OnPrint.prototype.start = function() {
   var emitter = this
   window.onbeforeprint = function () { emitter.emit('before') }
   window.onafterprint = function () { emitter.emit('after') }
+
+  cb()
 }
